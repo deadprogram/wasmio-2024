@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+
+<title>The Smallest Thing That Could Possibly Work - WASM I/O 2024</title>
+
+<meta name="description" content="The Smallest Thing That Could Possibly Work - WASM I/O 2024">
+<meta name="author" content="Ron Evans">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+<!-- For syntax highlighting -->
+<link rel="stylesheet" href="lib/css/tomorrow.css">
+
+<link rel="stylesheet" href="css/hybrid.css">
+
+<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+<script>
+	document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body>
+	<div class="reveal">
+
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<div class="slides">
+		<section>
+			<section>
+				<h2>"The Smallest Thing That Could Possibly Work: WebAssembly on Microcontrollers"</h2>
+				<h2>WASM I/O 2024</h2>
+				<h2>Ron Evans - @deadprogram</h2>
+			</section>
+		</section>
+
+		<section>
+			<h2>Ron Evans (@deadprogram)</h2>
+		</section>
+
+		<section>
+			<h2>Technologist For Hire</h2>
+		</section>
+	
+		<section>
+			<div class="image-container">
+				<img src="images/thg-logo.png">
+			</div>
+			<h3>hybridgroup.com</h3>
+		</section>
+
+		<section>
+			<h2>Software that makes</h2>
+			<h2>your hardware work</h2>
+		</section>
+		
+		<section>
+			<h2>Open Source Projects</h2>
+		</section>
+  
+		<section>
+			<div class="image-container">
+			  <img src="images/tinygo-logo.png">
+			</div>
+			<h3>tinygo.org</h3>          
+		</section>
+
+		<section>
+			<h2>WASM I/O</h2>
+		</section>
+
+		<section>
+			<h2>WebAssembly on Microcontrollers</h2>
+		</section>
+
+		<section>
+			<h2>Why?</h2>
+		</section>
+
+		<section>
+			<section>
+				<h2>Hardware devices that are extensible</h2>
+			</section>
+			<section>
+				<h2>App stores for devices</h2>
+			</section>	
+			<section>
+				<h2>Hardware with software add-ons</h2>
+			</section>
+			<section>
+				<h2>User programmable machines</h2>
+			</section>
+		</section>
+
+		<section>
+			<section>
+				<h2>Application specific APIs for hardware</h2>
+			</section>	
+			<section>
+				<h2>Games</h2>
+			</section>
+			<section>
+				<h2>Industrial Control Systems</h2>
+			</section>
+		</section>
+
+		<section>
+			<section>
+				<h2>Devices that need updates</h2>
+			</section>	
+			<section>
+				<h2>Bricking the device is less likely</h2>
+			</section>	
+			<section>
+				<h2>WASM code is compact</h2>
+			</section>
+			<section>
+				<h2>Better over slow/high latency connections</h2>
+			</section>
+		</section>
+
+		<section>
+			<section>
+				<h2>Device code that is portable</h2>
+			</section>	
+			<section>
+				<h2>Use any language that can compile to WASM</h2>
+			</section>	
+			<section>
+				<h2>C</h2>
+			</section>	
+			<section>
+				<h2>Rust</h2>
+			</section>
+			<section>
+				<h2>Zig</h2>
+			</section>	
+			<section>
+				<h2>Go</h2>
+			</section>	
+		</section>
+
+		<section>
+			<h2>Actually doing this has been incredibly difficult</h2>
+		</section>
+
+		<section>
+			<h2>Until now...</h2>
+		</section>
+
+		<section>
+			<div class="image-container">
+				<img src="images/logo-blue.png">
+			  </div>  
+			<h2>Introducing Mechanoid</h2>
+		</section>
+
+		<section>
+			<h2>Framework for WebAssembly applications on embedded devices</h2>
+		</section>
+
+		<section>
+			<h2>Written using Go/TinyGo</h2>
+		</section>
+
+		<section>
+			<h2>Write modules using any language that compiles to WASM</h2>
+		</section>
+
+		<section>
+			<h2>Batteries included</h2>
+		</section>
+
+		<section>
+			<section>
+				<h2>Built on open source</h2>
+			</section>
+
+			<section>
+				<h2>TinyGo</h2>
+				<h3>tinygo.org</h3>
+			</section>
+
+			<section>
+				<h2>Wazero</h2>
+				<h3>wazero.io</h3>
+			</section>
+
+			<section>
+				<h2>wypes</h2>
+				<h3>github.com/orsinium-labs/wypes</h3>
+			</section>
+		</section>
+
+		<section>
+			<h2>Embedded systems</h2>
+		</section>
+
+		<section>
+			<h2>Microcontrollers</h2>
+		</section>
+
+		<section>
+			<h2>32-bit processors</h2>
+			<h2>Single core</h2>
+			<h2>Less than 256k RAM</h2>
+		</section>
+
+		<section>
+			<h2>TinyGo runs bare metal on hardware</h2>
+		</section>
+
+		<section>
+			<h2>No operating system</h2>
+		</section>
+
+		<section>
+			<div class="image-container">
+				<img src="images/mecha-arch.png">
+			  </div>  
+			<h3>Mechanoid Architecture</h3>
+		</section>
+
+		<!-- demo 0 -->
+		<section>
+			<section>
+				<h2>"Hello, World"</h2>
+			</section>
+
+			<section>
+				<div class="image-container">
+					<img src="images/ping-arch.png">
+				  </div>  
+				<h3>Ping Architecture</h3>
+			</section>
+
+			<section>
+				<h2>Ping Module Code</h2>
+				<h3><a target="_blank" href="https://github.com/hybridgroup/mechanoid-examples/blob/main/simple/modules/ping/main.go">See the code</a></h3>
+			</section>
+
+			<section>
+				<h2>"Basic" Application Code</h2>
+				<h3><a target="_blank" href="https://github.com/hybridgroup/mechanoid-examples/blob/main/simple/main.go">See the code</a></h3>
+			</section>
+
+			<section>
+				<h2>Demo</h2>
+			</section>
+		</section>
+
+		<!-- demo 1 -->
+		<section>
+			<section>
+				<h2>"Hello, Thumby"</h2>
+			</section>
+
+			<section>
+				<h2>Tiny Circuits "Thumby"</h2>
+				<h3>Raspberry Pi RP2040</h3>
+				<h3>ARM Cortex M0+</h3>
+				<h3>32-bit processor</h3>
+				<h3>133 Mhz</h3>
+				<h3>264K RAM</h3>
+				<h3>2MB Flash Memory</h3>
+			</section>
+
+			<section>
+				<h2>Look At The Hardware</h2>
+			</section>
+
+			<section>
+				<div class="image-container">
+					<img src="images/thumby-arch.png">
+				  </div>  
+				<h3>Display Architecture</h3>
+			</section>
+
+			<section>
+				<h2>"Thumby" Application Code</h2>
+				<h3><a target="_blank" href="https://github.com/hybridgroup/mechanoid-examples/blob/main/thumby/main.go">See the code</a></h3>
+			</section>
+
+			<section>
+				<h2>Demo</h2>
+			</section>
+		</section>
+
+		<!-- demo 2/3 -->
+		<section>
+			<section>
+				<h2>WASM Badge</h2>
+			</section>
+
+			<section>
+				<h2>WebAssembly programmable Conference Badge</h2>
+			</section>
+
+			<section>
+				<h2>Adafruit PyBadge</h2>
+				<h3>Microchip ATSAMD51J18</h3>
+				<h3>ARM Cortex M4</h3>
+				<h3>32-bit processor</h3>
+				<h3>120 Mhz</h3>
+				<h3>192K RAM</h3>
+				<h3>512K Flash Memory</h3>
+			</section>
+
+			<section>
+				<h2>Look At The Hardware</h2>
+			</section>
+
+			<section>
+				<div class="image-container">
+					<img src="images/wasmbadge-arch.png">
+				  </div>  
+				<h3>WASM Badge Architecture</h3>
+			</section>
+
+			<section>
+				<h2>Badge Module Code</h2>
+				<h3><a target="_blank" href="https://github.com/hybridgroup/mechanoid-examples/blob/main/wasmbadge/modules/mynameis/main.go">See the code</a></h3>
+			</section>
+
+			<section>
+				<h2>Application Code</h2>
+				<h3><a target="_blank" href="https://github.com/hybridgroup/mechanoid-examples/blob/main/wasmbadge/main.go">See the code</a></h3>
+			</section>
+
+			<section>
+				<h2>wasm badge simulator demo</h2>
+			</section>
+
+			<section>
+				<h2>wasm badge hardware demo</h2>
+			</section>
+		</section>
+
+		<!-- demo 4 -->
+		<section>
+			<section>
+				<h2>WASM Drone</h2>
+			</section>
+
+			<section>
+				<h2>WebAssembly Drone flight controller</h2>
+			</section>
+
+			<section>
+				<h2>Adafruit PyBadge</h2>
+				<h3>Microchip ATSAMD51J18</h3>
+				<h3>ARM Cortex M4</h3>
+				<h3>32-bit processor</h3>
+				<h3>120 Mhz</h3>
+				<h3>192K RAM</h3>
+				<h3>512K Flash Memory</h3>
+			</section>
+
+			<section>
+				<h2>Adafruit Airlift Wifi Featherwing</h2>
+				<h3>Espressif ESP32-MINI-1</h3>
+				<h3>Xtensa Dual-core LX6</h3>
+				<h3>240 Mhz</h3>
+				<h3>520K RAM</h3>
+				<h3>4MB Flash Memory</h3>
+			</section>
+
+			<section>
+				<h2>DJI Tello</h2>
+			</section>
+
+			<section>
+				<h2>Look At The Hardware</h2>
+			</section>
+
+			<section>
+				<div class="image-container">
+					<img src="images/wasmdrone-arch.png">
+				  </div>  
+				<h3>WASM Drone Architecture</h3>
+			</section>
+
+			<section>
+				<h2>Drone Module Code</h2>
+				<h3><a target="_blank" href="https://github.com/hybridgroup/mechanoid-examples/blob/main/wasmdrone/modules/drone/main.go">See the code</a></h3>
+			</section>
+
+			<section>
+				<h2>Application Code</h2>
+				<h3><a target="_blank" href="https://github.com/hybridgroup/mechanoid-examples/blob/main/wasmdrone/main.go">See the code</a></h3>
+			</section>
+
+			<section>
+				<h2>wasm drone demo</h2>
+			</section>
+		</section>
+
+		<section>
+			<h2>Call to action...</h2>
+		</section>
+
+		<section>
+			<h2>mechanoid.io</h2>
+			<h2>@mechanoid</h2>
+			<h2>@mechanoid@mastodon.social</h2>
+		</section>
+
+		<section>
+			<h1>Thank you!</h1>
+			<h2>@deadprogram</h2>
+			<h2>Technologist For Hire</h2>
+		</section>	
+	  </div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.min.js"></script>
+	<script src="js/hybrid.js"></script>
+
+	<script>
+
+	  // Full list of configuration options available here:
+	  // https://github.com/hakimel/reveal.js#configuration
+	  Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+		transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+		// Optional libraries used to extend on reveal.js
+		dependencies: [
+		  { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+		  { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		  { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		  { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+		  { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+		  { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+		]
+	  });
+
+	</script>
+
+  </body>
+</html>
