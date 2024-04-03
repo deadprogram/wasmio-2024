@@ -12,7 +12,7 @@ The application has 2 devices: the Display device for showing status, and the Dr
 
 ```mermaid
 flowchart LR
-    subgraph Microcontroller
+    subgraph Main Microcontroller
         subgraph Application
         end
         subgraph Devices
@@ -29,9 +29,13 @@ flowchart LR
         drone.wasm--Commands-->Drone
         drone.wasm-->Display
     end
+    subgraph WiFi Microcontroller
+        ESP32
+    end
     subgraph Tello
     end
-    Drone--WiFi-->Tello
+    Drone--SPI-->ESP32
+    ESP32--WiFi-->Tello
 ```
 
 ## How to run
